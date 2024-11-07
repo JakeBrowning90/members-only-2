@@ -8,7 +8,7 @@ const LocalStrategy = require("passport-local").Strategy;
 passport.use(
   new LocalStrategy(async (username, password, done) => {
     try {
-      const user = await db.getUserByEmail(username);
+      const user = await db.getUserByUsername(username);
       if (!user) {
         return done(null, false, { message: "Incorrect email" });
       }
@@ -40,8 +40,13 @@ const validateForm = [
   body("username")
     .trim()
     .isLength({ min: 1, max: 20 })
-    .withMessage("Username must contain between 1 and 20 characters."),
-  // TODO: check for existing email
+    .withMessage("Username must contain between 1 and 20 characters.")
+    .custom(async (value) => {
+      const existingUsername = await db.getUserByUsername(value);
+      if (existingUsername) {
+        throw new Error("Username already in use.");
+      }
+    }),
   body("email")
     .trim()
     .isEmail()
@@ -71,12 +76,11 @@ exports.getSignup = asyncHandler(async (req, res) => {
 exports.postSignup = [
   validateForm,
   asyncHandler(async (req, res) => {
-    const user = req.body;
     const errors = validationResult(req);
     // If errors, rerender form and display errors
     if (!errors.isEmpty()) {
-      // TODO: Render with errors
-      res.render("signup", { errors: errors.array() });
+      // TODO: pass values back to form
+      res.render("signup", { errors: errors.array(), fields: req.body });
     } else {
       // If valid, insert user and redirect to login
       try {
@@ -124,5 +128,14 @@ exports.getMembership = asyncHandler(async (req, res) => {
 });
 
 exports.postMembership = asyncHandler(async (req, res) => {
-  res.render("index");
+  if (
+    req.body.verifyPassword &&
+    req.body.verifyPassword == process.env.VERIFY_PW
+  ) {
+    await db.updateUserToMember(req.user.id);
+  }
+  // if (req.body.adminPassword) {
+  //   await db.updateUserToAdmin(req.user.id);
+  // }
+  res.redirect("/membership");
 });

@@ -1,13 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <%- include('partials/header')%>
 
     <h1>Membership</h1>
-</body>
+    <% if (locals.currentUser) {%>
+
+    <p>Username: <%= currentUser.username %></p>
+
+    <% if (currentUser.is_member && currentUser.is_admin) { %>
+    <p>Status: Admin</p>
+
+    <% } else if (currentUser.is_member) { %>
+    <p>Status: Verified</p>
+    <form action="/membership" method="post">
+      <label for="adminPassword">Upgrade to Admin:</label>
+      <input type="password" name="adminPassword" id="adminPassword" />
+      <button>Submit</button>
+    </form>
+    <% } else { %>
+    <p>Status: Unverified</p>
+    <form action="/membership" method="post">
+      <label for="verifyPassword">Upgrade to Verified:</label>
+      <input type="password" name="verifyPassword" id="verifyPassword" />
+      <button>Submit</button>
+    </form>
+    <% } %> <% } %>
+  </body>
 </html>
