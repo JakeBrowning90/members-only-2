@@ -5,6 +5,8 @@
     <a href="/login">Log In</a>
     <a href="/logout">Log Out</a>
     <a href="/membership">Status</a>
-    <p>TBA: Username</p>
+    <% if (locals.currentUser) { %>
+    <p><%= currentUser.username%></p>
+    <% }%>
   </nav>
 </header>
