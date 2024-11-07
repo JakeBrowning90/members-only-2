@@ -18,4 +18,13 @@ router.get("/login", indexController.getLogin);
 // POST Login
 router.post("/login", indexController.postLogin);
 
+// GET Logout
+router.get("/logout", indexController.getLogout);
+
+// GET Membership
+router.get("/membership", indexController.getMembership);
+
+// POST Login
+router.post("/membership", indexController.postMembership);
+
 module.exports = router;
