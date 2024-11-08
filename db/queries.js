@@ -41,6 +41,24 @@ async function updateUserToAdmin(id) {
   await pool.query("UPDATE users SET is_admin = TRUE WHERE id = ($1)", [id]);
 }
 
+async function insertPost(post, user) {
+  await pool.query(
+    "INSERT INTO posts (title, body, user_id, timestamp) VALUES ($1, $2, $3, CURRENT_TIMESTAMP)",
+    [post.postTitle, post.postBody, user.id]
+  );
+}
+
+async function getAllPosts() {
+  const { rows } = await pool.query(
+    "SELECT posts.id, title, body, timestamp, username FROM posts INNER JOIN users ON posts.user_id = users.id ORDER BY timestamp DESC"
+  );
+  return rows;
+}
+
+async function deletePost(id) {
+  await pool.query("DELETE FROM posts WHERE id = ($1)", [id]);
+}
+
 module.exports = {
   insertUser,
   getUserByUsername,
@@ -48,4 +66,7 @@ module.exports = {
   getUserById,
   updateUserToMember,
   updateUserToAdmin,
+  insertPost,
+  getAllPosts,
+  deletePost,
 };

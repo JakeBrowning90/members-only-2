@@ -30,4 +30,7 @@ router.post("/membership", indexController.postMembership);
 // POST New Post
 router.post("/newpost", indexController.postNewpost);
 
+//DELETE Post
+router.post("/delete/:id", indexController.deletePost);
+
 module.exports = router;

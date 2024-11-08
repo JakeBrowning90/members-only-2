@@ -8,8 +8,6 @@ const passport = require("passport");
 
 //Routers
 const indexRouter = require("./routes/index");
-// const artistRouter = require("./routes/artist");
-// const albumRouter = require("./routes/album");
 
 const app = express();
 const path = require("node:path");

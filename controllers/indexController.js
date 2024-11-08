@@ -77,7 +77,9 @@ const validatePost = [
 ];
 
 exports.getIndex = asyncHandler(async (req, res) => {
-  res.render("index");
+  const posts = await db.getAllPosts();
+  console.log(posts);
+  res.render("index", { posts: posts });
 });
 
 exports.getSignup = asyncHandler(async (req, res) => {
@@ -173,14 +175,21 @@ exports.postNewpost = [
   validatePost,
   asyncHandler(async (req, res) => {
     console.log(req.body);
-    console.log(req.body.user);
+    // console.log(req.user);
+    // console.log(req.user.id);
     console.log(Date.now());
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       res.render("index", { errors: errors.array(), fields: req.body });
     } else {
       // TODO: Insert post to table
+      await db.insertPost(req.body, req.user);
       res.redirect("/");
     }
   }),
 ];
+
+exports.deletePost = asyncHandler(async (req, res) => {
+  await db.deletePost(req.params.id);
+  res.redirect("/");
+});

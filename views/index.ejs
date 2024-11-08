@@ -10,22 +10,30 @@
 
     <h1>Members Only Homepage</h1>
 
-
     <!-- TODO: Form only visible to user that IS MEMBER -->
     <%- include('partials/errors')%>
 
     <form action="/newpost" method="post">
       <h2>New Post</h2>
       <label for="postTitle">Title:</label>
-      <input type="text" name="postTitle" id="postTitle"/>
+      <input type="text" name="postTitle" id="postTitle" />
       <label for="postBody">Body:</label>
-      <textarea name="postBody" id="postBody"></textarea> 
+      <textarea name="postBody" id="postBody"></textarea>
       <button>Submit</button>
     </form>
 
     <ul>
-
+      <% if (locals.posts) { %> <% posts.forEach((post) => { %>
+      <li>
+        <form action="/delete/<%= post.id %>" method="post"> 
+          <button>Delete</button>
+        </form>
+        <p><%= post.username %></p>
+        <p><%= post.timestamp %></p>
+        <p><%= post.title %></p>
+        <p><%= post.body %></p>
+      </li>
+      <%})%> <%}%>
     </ul>
-
   </body>
 </html>
