@@ -50,7 +50,7 @@ async function insertPost(post, user) {
 
 async function getAllPosts() {
   const { rows } = await pool.query(
-    "SELECT posts.id, title, body, timestamp, username FROM posts INNER JOIN users ON posts.user_id = users.id ORDER BY timestamp DESC"
+    "SELECT posts.id, title, body, timestamp, user_id, username FROM posts INNER JOIN users ON posts.user_id = users.id ORDER BY timestamp DESC"
   );
   return rows;
 }

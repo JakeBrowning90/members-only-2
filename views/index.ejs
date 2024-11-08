@@ -10,8 +10,9 @@
 
     <h1>Members Only Homepage</h1>
 
-    <!-- TODO: Form only visible to user that IS MEMBER -->
-    <%- include('partials/errors')%>
+    <!-- Form only visible to members, else display notification -->
+    <%- include('partials/errors')%> <% if (locals.currentUser &&
+    currentUser.is_member) { %>
 
     <form action="/newpost" method="post">
       <h2>New Post</h2>
@@ -22,14 +23,25 @@
       <button>Submit</button>
     </form>
 
+    <%} else { %>
+    <h2>Become a Verified Member to contribute and see who else is posting!</h2>
+    <%}%>
+
     <ul>
       <% if (locals.posts) { %> <% posts.forEach((post) => { %>
       <li>
-        <form action="/delete/<%= post.id %>" method="post"> 
+        <% if (locals.currentUser && ((currentUser.id == post.user_id) ||
+        (currentUser.is_admin))) { %>
+        <form action="/delete/<%= post.id %>" method="post">
           <button>Delete</button>
         </form>
+        <%} %> <% if (locals.currentUser && currentUser.is_member) { %>
         <p><%= post.username %></p>
         <p><%= post.timestamp %></p>
+        <%} else {%>
+        <p>Member writes:</p>
+        <%}%>
+
         <p><%= post.title %></p>
         <p><%= post.body %></p>
       </li>
