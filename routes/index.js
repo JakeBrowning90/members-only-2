@@ -27,4 +27,7 @@ router.get("/membership", indexController.getMembership);
 // POST Login
 router.post("/membership", indexController.postMembership);
 
+// POST New Post
+router.post("/newpost", indexController.postNewpost);
+
 module.exports = router;

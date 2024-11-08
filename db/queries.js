@@ -37,7 +37,9 @@ async function updateUserToMember(id) {
   await pool.query("UPDATE users SET is_member = TRUE WHERE id = ($1)", [id]);
 }
 
-async function updateUserToAdmin(id) {}
+async function updateUserToAdmin(id) {
+  await pool.query("UPDATE users SET is_admin = TRUE WHERE id = ($1)", [id]);
+}
 
 module.exports = {
   insertUser,
@@ -45,4 +47,5 @@ module.exports = {
   getUserByEmail,
   getUserById,
   updateUserToMember,
+  updateUserToAdmin,
 };

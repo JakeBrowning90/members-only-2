@@ -18,6 +18,9 @@
 
     <% } else if (currentUser.is_member) { %>
     <p>Status: Verified</p>
+    <% if (locals.error) {%>
+    <p><%= error %></p>
+    <%}%>
     <form action="/membership" method="post">
       <label for="adminPassword">Upgrade to Admin:</label>
       <input type="password" name="adminPassword" id="adminPassword" />

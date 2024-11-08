@@ -65,12 +65,27 @@ const validateForm = [
     .withMessage("Typed passwords do not match."),
 ];
 
+const validatePost = [
+  body("postTitle")
+    .trim()
+    .isLength({ min: 1, max: 100 })
+    .withMessage("Title must contain between 1 and 100 characters."),
+  body("postBody")
+    .trim()
+    .isLength({ min: 1, max: 300 })
+    .withMessage("Body must contain between 1 and 300 characters."),
+];
+
 exports.getIndex = asyncHandler(async (req, res) => {
   res.render("index");
 });
 
 exports.getSignup = asyncHandler(async (req, res) => {
-  res.render("signup");
+  if (req.user) {
+    res.redirect("/");
+  } else {
+    res.render("signup");
+  }
 });
 
 exports.postSignup = [
@@ -79,7 +94,6 @@ exports.postSignup = [
     const errors = validationResult(req);
     // If errors, rerender form and display errors
     if (!errors.isEmpty()) {
-      // TODO: pass values back to form
       res.render("signup", { errors: errors.array(), fields: req.body });
     } else {
       // If valid, insert user and redirect to login
@@ -104,7 +118,11 @@ exports.postSignup = [
 ];
 
 exports.getLogin = asyncHandler(async (req, res) => {
-  res.render("login");
+  if (req.user) {
+    res.redirect("/");
+  } else {
+    res.render("login");
+  }
 });
 
 exports.postLogin = [
@@ -124,7 +142,11 @@ exports.getLogout = asyncHandler(async (req, res) => {
 });
 
 exports.getMembership = asyncHandler(async (req, res) => {
-  res.render("membership");
+  if (!req.user) {
+    res.redirect("/");
+  } else {
+    res.render("membership");
+  }
 });
 
 exports.postMembership = asyncHandler(async (req, res) => {
@@ -133,9 +155,32 @@ exports.postMembership = asyncHandler(async (req, res) => {
     req.body.verifyPassword == process.env.VERIFY_PW
   ) {
     await db.updateUserToMember(req.user.id);
+    res.redirect("/membership");
+  } else if (
+    req.body.adminPassword &&
+    req.body.adminPassword == process.env.ADMIN_PW
+  ) {
+    await db.updateUserToAdmin(req.user.id);
+    res.redirect("/membership");
+  } else {
+    res.render("membership", {
+      error: "Incorrect password.",
+    });
   }
-  // if (req.body.adminPassword) {
-  //   await db.updateUserToAdmin(req.user.id);
-  // }
-  res.redirect("/membership");
 });
+
+exports.postNewpost = [
+  validatePost,
+  asyncHandler(async (req, res) => {
+    console.log(req.body);
+    console.log(req.body.user);
+    console.log(Date.now());
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.render("index", { errors: errors.array(), fields: req.body });
+    } else {
+      // TODO: Insert post to table
+      res.redirect("/");
+    }
+  }),
+];
