@@ -10,11 +10,23 @@
       <%- include('partials/errors')%>
       <div class="formField">
         <label for="username">Username:</label>
-        <input type="text" name="username" id="username" />
+        <input
+          type="text"
+          name="username"
+          id="username"
+          minlength="1"
+          maxlength="20"
+        />
       </div>
       <div class="formField">
         <label for="password">Password:</label>
-        <input type="password" name="password" id="password" />
+        <input
+          type="password"
+          name="password"
+          id="password"
+          minlength="1"
+          maxlength="20"
+        />
       </div>
 
       <button class="blueButton">Submit</button>

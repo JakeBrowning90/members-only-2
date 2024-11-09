@@ -1,6 +1,7 @@
 :root {
   --blue: #1f51ff;
   --grey: #dadada;
+  --dark-grey: #505050;
 }
 
 html,
@@ -28,23 +29,31 @@ form,
   gap: 5px;
 }
 
-h1 {
-  font-size: 2rem;
+h1,
+h2 {
   font-weight: bold;
 }
 
-h2 {
+h1 {
   font-size: 1.5rem;
 }
 
-h3 {
+h2 {
   font-size: 1.2rem;
 }
 
 nav,
 li,
-form {
+form,
+.memberDiv,
+.aboutBody {
   background-color: white;
+  border-bottom: 1px solid var(--grey);
+}
+
+header {
+  position: sticky;
+  top: 0;
 }
 
 nav {
@@ -55,8 +64,16 @@ nav {
   border-bottom: 1px solid var(--grey);
 }
 
+.navRight {
+  display: flex;
+  flex-direction: row;
+  gap: 3px;
+  justify-content: center;
+  align-content: center;
+}
+
 .padded {
-  padding: 5px;
+  padding: 10px;
 }
 
 .blueButton {
@@ -68,11 +85,32 @@ nav {
   border-radius: 50px;
 }
 
-.errorMsg {
-    color: rgb(182, 0, 0);
+button {
+  margin: auto;
 }
 
-.postLI {
-    border-bottom: 1px solid var(--grey);
+.errorMsg {
+  color: rgb(182, 0, 0);
+}
 
+.postLI, .aboutBody {
+  border-bottom: 1px solid var(--grey);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+textarea {
+  resize: none;
+}
+
+.postGrey {
+  color: var(--dark-grey);
+}
+
+.postFooter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }

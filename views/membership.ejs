@@ -4,32 +4,44 @@
 
   <body>
     <%- include('partials/header')%>
+    <div class="memberDiv">
+      <h1 class="padded">Membership</h1>
 
-    <h1>Membership</h1>
-    <% if (locals.currentUser) {%>
+      <p class="padded">Username: <%= currentUser.username %></p>
 
-    <p>Username: <%= currentUser.username %></p>
+      <% if (currentUser.is_member && currentUser.is_admin) { %>
+      <p class="padded">Status: Admin</p>
 
-    <% if (currentUser.is_member && currentUser.is_admin) { %>
-    <p>Status: Admin</p>
+      <% } else if (currentUser.is_member) { %>
+      <p class="padded">Status: Verified</p>
+      <% } else { %>
+      <p class="padded">Status: Unverified</p>
+      <% } %>
+    </div>
 
-    <% } else if (currentUser.is_member) { %>
-    <p>Status: Verified</p>
-    <% if (locals.error) {%>
-    <p><%= error %></p>
-    <%}%>
-    <form action="/membership" method="post">
-      <label for="adminPassword">Upgrade to Admin:</label>
+    <% if (currentUser.is_member && !currentUser.is_admin) { %>
+    <form action="/membership" method="post" class="padded">
+      <h2>Upgrade to Admin</h2>
+      <label for="adminPassword">Admin password:</label>
+      <% if (locals.error) { %>
+      <p class="errorMsg"><%= error %></p>
+      <% } %>
       <input type="password" name="adminPassword" id="adminPassword" />
-      <button>Submit</button>
+      <button class="blueButton">Submit</button>
     </form>
-    <% } else { %>
-    <p>Status: Unverified</p>
-    <form action="/membership" method="post">
-      <label for="verifyPassword">Upgrade to Verified:</label>
+
+    <% } else if (!currentUser.is_member) { %>
+
+    <form action="/membership" method="post" class="padded">
+      <h2>Upgrade to Verified</h2>
+
+      <label for="verifyPassword">Verification Password:</label>
+      <% if (locals.error) { %>
+      <p class="errorMsg"><%= error %></p>
+      <% } %>
       <input type="password" name="verifyPassword" id="verifyPassword" />
-      <button>Submit</button>
+      <button class="blueButton">Submit</button>
     </form>
-    <% } %> <% } %>
+    <% } %>
   </body>
 </html>

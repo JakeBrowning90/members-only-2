@@ -1,7 +1,7 @@
 <header>
   <nav class="padded">
-    <a href="/"><img src="/imgs/owl.svg" alt="" /></a>
-    <div>
+    <a href="/"><img src="/imgs/owl.svg" alt="owl logo" /></a>
+    <div class="navRight">
       <% if (locals.currentUser) { %>
       <a href="/membership" class="blueButton"><%= currentUser.username%></a>
 
@@ -11,6 +11,7 @@
       <a href="/signup" class="blueButton">Sign Up</a>
       <a href="/login" class="blueButton">Log In</a>
       <% } %>
+      <a href="/about"><img src="/imgs/about.svg" alt="about logo" /></a>
     </div>
   </nav>
 </header>

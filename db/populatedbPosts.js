@@ -4,7 +4,7 @@ require("dotenv").config();
 const SQL = `
 CREATE TABLE IF NOT EXISTS posts (
    id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-   title VARCHAR ( 100 ),
+   title VARCHAR ( 50 ),
    body VARCHAR ( 300 ),
    timestamp TIMESTAMP NOT NULL,
    user_id INT REFERENCES users(id)

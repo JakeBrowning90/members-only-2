@@ -5,8 +5,6 @@
   <body>
     <%- include('partials/header')%>
 
-    <h1>Homepage</h1>
-
     <!-- Form only visible to members, else display notification -->
     <%- include('partials/errors')%> <% if (locals.currentUser &&
     currentUser.is_member) { %>
@@ -14,36 +12,62 @@
     <form action="/newpost" method="post" class="padded">
       <h2>New post:</h2>
       <label for="postTitle">Title:</label>
-      <input type="text" name="postTitle" id="postTitle" />
+      <input
+        type="text"
+        name="postTitle"
+        id="postTitle"
+        minlength="1"
+        maxlength="50"
+        placeholder="Max. 50 characters"
+        required
+      />
       <label for="postBody">Body:</label>
-      <textarea name="postBody" id="postBody"></textarea>
-      <button>Submit</button>
+      <textarea
+        name="postBody"
+        id="postBody"
+        rows="10"
+        minlength="1"
+        maxlength="300"
+        placeholder="Max. 300 characters"
+        required
+      ></textarea>
+      <button class="blueButton">Submit</button>
     </form>
 
     <%} else { %>
-    <h2>Become a member, see "hoo" is here, and join the fun!</h2>
+    <h2 class="padded">
+      "Hoo" else is here? Become a verified member to join the fun!
+    </h2>
     <%}%>
 
     <ul>
       <% if (locals.posts) { %> <% posts.forEach((post) => { %>
       <li class="postLI padded">
-        <% if (locals.currentUser && ((currentUser.id == post.user_id) ||
-        (currentUser.is_admin))) { %>
-        <form action="/delete/<%= post.id %>" method="post">
-          <button>Delete</button>
-        </form>
-        <%} %> <% if (locals.currentUser && currentUser.is_member) { %>
-        <p><%= post.username %></p>
-        <p><%= post.timestamp %></p>
+        <!-- Username only visible to verified members -->
+        <% if (locals.currentUser && currentUser.is_member) { %>
+        <h2><%= post.username %></h2>
         <%} else {%>
-        <p>Member writes:</p>
+        <h2>Member writes:</h2>
         <%}%>
 
-        <p><%= post.title %></p>
+        <p class="postGrey"><%= post.title %></p>
         <p><%= post.body %></p>
+        <div class="postFooter">
+          <!-- Timestamp only visible to verified members -->
+          <% if (locals.currentUser && currentUser.is_member) { %>
+          <p class="postGrey"><%= post.timestamp.toUTCString() %></p>
+          <%} %>
+          <!-- Delete link only visible to author and admin -->
+          <% if (locals.currentUser && ((currentUser.id == post.user_id) ||
+          (currentUser.is_admin))) { %>
+          <a href="/delete/<%= post.id %>" class="blueButton">
+            <img src="/imgs/trash.svg" alt="trash icon" />
+          </a>
+          <%} %>
+        </div>
       </li>
       <%})%> <%}%>
-      <h3>End of post history</h3>
+      <h2 class="padded">End of post history</h2>
     </ul>
   </body>
 </html>

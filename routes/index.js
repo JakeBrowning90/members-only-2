@@ -6,6 +6,9 @@ const indexController = require("../controllers/indexController");
 // GET Homepage
 router.get("/", indexController.getIndex);
 
+// GET About
+router.get("/about", indexController.getAbout);
+
 // GET Signup
 router.get("/signup", indexController.getSignup);
 
@@ -31,6 +34,6 @@ router.post("/membership", indexController.postMembership);
 router.post("/newpost", indexController.postNewpost);
 
 //DELETE Post
-router.post("/delete/:id", indexController.deletePost);
+router.get("/delete/:id", indexController.deletePost);
 
 module.exports = router;

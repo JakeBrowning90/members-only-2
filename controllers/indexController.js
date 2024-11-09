@@ -68,8 +68,8 @@ const validateForm = [
 const validatePost = [
   body("postTitle")
     .trim()
-    .isLength({ min: 1, max: 100 })
-    .withMessage("Title must contain between 1 and 100 characters."),
+    .isLength({ min: 1, max: 50 })
+    .withMessage("Title must contain between 1 and 50 characters."),
   body("postBody")
     .trim()
     .isLength({ min: 1, max: 300 })
@@ -79,6 +79,11 @@ const validatePost = [
 exports.getIndex = asyncHandler(async (req, res) => {
   const posts = await db.getAllPosts();
   res.render("index", { title: "Homepage", posts: posts });
+});
+
+exports.getAbout = asyncHandler(async (req, res) => {
+  const posts = await db.getAllPosts();
+  res.render("about", { title: "About" });
 });
 
 exports.getSignup = asyncHandler(async (req, res) => {
@@ -180,10 +185,12 @@ exports.postNewpost = [
   asyncHandler(async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      const posts = await db.getAllPosts();
       res.render("index", {
         title: "Homepage",
         errors: errors.array(),
         fields: req.body,
+        posts: posts,
       });
     } else {
       // TODO: Insert post to table
