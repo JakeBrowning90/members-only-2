@@ -1,25 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
+  <%- include('partials/head')%>
+
   <body>
     <%- include('partials/header')%>
-
-    <h1>Sign Up</h1>
-    <%- include('partials/errors')%>
-    <form action="" method="post">
-      <label for="username">Username:</label>
-      <input type="text" name="username" id="username" value="<%= (locals.fields) ? fields.username : '' %>"/>
-      <label for="email">Email:</label>
-      <input type="email" name="email" id="email" value="<%= (locals.fields) ? fields.email : '' %>"/>
-      <label for="password">Password:</label>
-      <input type="password" name="password" id="password" />
-      <label for="passwordConfirm">Confirm Password:</label>
-      <input type="password" name="passwordConfirm" id="passwordConfirm" />
-      <button>Submit</button>
+    <form action="" method="post" class="padded">
+      <h1>Sign Up</h1>
+      <%- include('partials/errors')%>
+      <div class="formField">
+        <label for="username">Username:</label>
+        <input
+          type="text"
+          name="username"
+          id="username"
+          value="<%= (locals.fields) ? fields.username : '' %>"
+        />
+      </div>
+      <div class="formField">
+        <label for="email">Email:</label>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          value="<%= (locals.fields) ? fields.email : '' %>"
+        />
+      </div>
+      <div class="formField">
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" />
+      </div>
+      <div class="formField">
+        <label for="passwordConfirm">Confirm Password:</label>
+        <input type="password" name="passwordConfirm" id="passwordConfirm" />
+      </div>
+      <button class="blueButton">Submit</button>
     </form>
   </body>
 </html>

@@ -1,16 +1,16 @@
 <header>
-  <nav>
-    <a href="/">Home</a>
+  <nav class="padded">
+    <a href="/"><img src="/imgs/owl.svg" alt="" /></a>
+    <div>
+      <% if (locals.currentUser) { %>
+      <a href="/membership" class="blueButton"><%= currentUser.username%></a>
 
-    <% if (locals.currentUser) { %>
-    <a href="/">Add</a>
-    <a href="/membership"><%= currentUser.username%></a>
+      <a href="/logout" class="blueButton">Log Out</a>
 
-    <a href="/logout">Log Out</a>
-
-    <% } else { %>
-    <a href="/signup">Sign Up</a>
-    <a href="/login">Log In</a>
-    <% } %>
+      <% } else { %>
+      <a href="/signup" class="blueButton">Sign Up</a>
+      <a href="/login" class="blueButton">Log In</a>
+      <% } %>
+    </div>
   </nav>
 </header>

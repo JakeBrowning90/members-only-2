@@ -78,14 +78,14 @@ const validatePost = [
 
 exports.getIndex = asyncHandler(async (req, res) => {
   const posts = await db.getAllPosts();
-  res.render("index", { posts: posts });
+  res.render("index", { title: "Homepage", posts: posts });
 });
 
 exports.getSignup = asyncHandler(async (req, res) => {
   if (req.user) {
     res.redirect("/");
   } else {
-    res.render("signup");
+    res.render("signup", { title: "Sign Up" });
   }
 });
 
@@ -95,7 +95,11 @@ exports.postSignup = [
     const errors = validationResult(req);
     // If errors, rerender form and display errors
     if (!errors.isEmpty()) {
-      res.render("signup", { errors: errors.array(), fields: req.body });
+      res.render("signup", {
+        title: "Sign Up",
+        errors: errors.array(),
+        fields: req.body,
+      });
     } else {
       // If valid, insert user and redirect to login
       try {
@@ -122,7 +126,7 @@ exports.getLogin = asyncHandler(async (req, res) => {
   if (req.user) {
     res.redirect("/");
   } else {
-    res.render("login");
+    res.render("login", { title: "Log In" });
   }
 });
 
@@ -146,7 +150,7 @@ exports.getMembership = asyncHandler(async (req, res) => {
   if (!req.user) {
     res.redirect("/");
   } else {
-    res.render("membership");
+    res.render("membership", { title: "Membership" });
   }
 });
 
@@ -165,6 +169,7 @@ exports.postMembership = asyncHandler(async (req, res) => {
     res.redirect("/membership");
   } else {
     res.render("membership", {
+      title: "Membership",
       error: "Incorrect password.",
     });
   }
@@ -175,7 +180,11 @@ exports.postNewpost = [
   asyncHandler(async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.render("index", { errors: errors.array(), fields: req.body });
+      res.render("index", {
+        title: "Homepage",
+        errors: errors.array(),
+        fields: req.body,
+      });
     } else {
       // TODO: Insert post to table
       await db.insertPost(req.body, req.user);

@@ -1,0 +1,78 @@
+:root {
+  --blue: #1f51ff;
+  --grey: #dadada;
+}
+
+html,
+body {
+  max-width: 500px;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0 auto;
+}
+
+html {
+  background-color: white;
+}
+
+body {
+  background-color: rgb(255, 198, 198);
+  border-left: 1px solid var(--grey);
+  border-right: 1px solid var(--grey);
+  height: 100vh;
+}
+
+form,
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+h3 {
+  font-size: 1.2rem;
+}
+
+nav,
+li,
+form {
+  background-color: white;
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--grey);
+}
+
+.padded {
+  padding: 5px;
+}
+
+.blueButton {
+  background-color: var(--blue);
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 5px 10px;
+  border-radius: 50px;
+}
+
+.errorMsg {
+    color: rgb(182, 0, 0);
+}
+
+.postLI {
+    border-bottom: 1px solid var(--grey);
+
+}

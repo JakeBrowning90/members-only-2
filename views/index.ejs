@@ -1,21 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
+  <%- include('partials/head')%>
+
   <body>
     <%- include('partials/header')%>
 
-    <h1>Members Only Homepage</h1>
+    <h1>Homepage</h1>
 
     <!-- Form only visible to members, else display notification -->
     <%- include('partials/errors')%> <% if (locals.currentUser &&
     currentUser.is_member) { %>
 
-    <form action="/newpost" method="post">
-      <h2>New Post</h2>
+    <form action="/newpost" method="post" class="padded">
+      <h2>New post:</h2>
       <label for="postTitle">Title:</label>
       <input type="text" name="postTitle" id="postTitle" />
       <label for="postBody">Body:</label>
@@ -24,12 +21,12 @@
     </form>
 
     <%} else { %>
-    <h2>Become a Verified Member to contribute and see who else is posting!</h2>
+    <h2>Become a member, see "hoo" is here, and join the fun!</h2>
     <%}%>
 
     <ul>
       <% if (locals.posts) { %> <% posts.forEach((post) => { %>
-      <li>
+      <li class="postLI padded">
         <% if (locals.currentUser && ((currentUser.id == post.user_id) ||
         (currentUser.is_admin))) { %>
         <form action="/delete/<%= post.id %>" method="post">
@@ -46,6 +43,7 @@
         <p><%= post.body %></p>
       </li>
       <%})%> <%}%>
+      <h3>End of post history</h3>
     </ul>
   </body>
 </html>
