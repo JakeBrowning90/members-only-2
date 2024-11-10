@@ -4,6 +4,8 @@ const asyncHandler = require("express-async-handler");
 const passport = require("passport");
 const bcrypt = require("bcryptjs");
 const LocalStrategy = require("passport-local").Strategy;
+const validateUserForm = require("../middleware/validateUserForm");
+const validatePostForm = require("../middleware/validatePostForm");
 
 passport.use(
   new LocalStrategy(async (username, password, done) => {
@@ -36,46 +38,6 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-const validateForm = [
-  body("username")
-    .trim()
-    .isLength({ min: 1, max: 20 })
-    .withMessage("Username must contain between 1 and 20 characters.")
-    .custom(async (value) => {
-      const existingUsername = await db.getUserByUsername(value);
-      if (existingUsername) {
-        throw new Error("Username already in use.");
-      }
-    }),
-  body("email")
-    .trim()
-    .isEmail()
-    .withMessage("Invalid email address format.")
-    .isLength({ min: 1, max: 50 })
-    .withMessage("Email must contain between 1 and 50 characters."),
-  body("password")
-    .trim()
-    .isLength({ min: 1, max: 20 })
-    .withMessage("Password must contain between 1 and 20 characters."),
-  body("passwordConfirm")
-    .trim()
-    .custom((value, { req }) => {
-      return value === req.body.password;
-    })
-    .withMessage("Typed passwords do not match."),
-];
-
-const validatePost = [
-  body("postTitle")
-    .trim()
-    .isLength({ min: 1, max: 50 })
-    .withMessage("Title must contain between 1 and 50 characters."),
-  body("postBody")
-    .trim()
-    .isLength({ min: 1, max: 300 })
-    .withMessage("Body must contain between 1 and 300 characters."),
-];
-
 exports.getIndex = asyncHandler(async (req, res) => {
   const posts = await db.getAllPosts();
   res.render("index", { title: "Homepage", posts: posts });
@@ -95,7 +57,7 @@ exports.getSignup = asyncHandler(async (req, res) => {
 });
 
 exports.postSignup = [
-  validateForm,
+  validateUserForm,
   asyncHandler(async (req, res) => {
     const errors = validationResult(req);
     // If errors, rerender form and display errors
@@ -181,7 +143,7 @@ exports.postMembership = asyncHandler(async (req, res) => {
 });
 
 exports.postNewpost = [
-  validatePost,
+  validatePostForm,
   asyncHandler(async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
