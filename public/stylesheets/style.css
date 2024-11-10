@@ -16,10 +16,9 @@ html {
 }
 
 body {
-  background-color: rgb(255, 198, 198);
   border-left: 1px solid var(--grey);
   border-right: 1px solid var(--grey);
-  height: 100vh;
+  height: 100%;
 }
 
 form,
@@ -45,6 +44,7 @@ h2 {
 nav,
 li,
 form,
+.mainSticky,
 .memberDiv,
 .aboutBody {
   background-color: white;
@@ -54,6 +54,7 @@ form,
 header {
   position: sticky;
   top: 0;
+  z-index: 3;
 }
 
 nav {
@@ -73,13 +74,14 @@ nav {
 }
 
 .mainSticky {
-    background-color: rgb(166, 243, 166);
-    position: sticky;
-    top: 60px;
+  position: sticky;
+  top: 60px;
+  z-index: 2;
 }
 
 .newPostForm {
 }
+
 .newPostFormHeader {
   display: flex;
   justify-content: space-between;
@@ -88,6 +90,7 @@ nav {
 .newPostFormBody {
   display: none;
   flex-direction: column;
+  gap: 5px;
 }
 
 .showForm {
