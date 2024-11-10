@@ -6,44 +6,46 @@
     <%- include('partials/header')%>
     <main>
       <!-- Form only visible to members, else display notification -->
-      <% if (locals.currentUser && currentUser.is_member) { %>
+      <div class="mainSticky">
+        <% if (locals.currentUser && currentUser.is_member) { %>
 
-      <form action="/newpost" method="post" class="padded newPostForm">
-        <div class="newPostFormHeader">
-          <h2>New post:</h2>
-          <img src="/imgs/down.svg" alt="" id="formToggle" />
-        </div>
-        <div class="newPostFormBody">
-          <%- include('partials/errors')%>
-          <label for="postTitle">Title:</label>
-          <input
-            type="text"
-            name="postTitle"
-            id="postTitle"
-            minlength="1"
-            maxlength="50"
-            placeholder="Max. 50 characters"
-            required
-          />
-          <label for="postBody">Body:</label>
-          <textarea
-            name="postBody"
-            id="postBody"
-            rows="10"
-            minlength="1"
-            maxlength="300"
-            placeholder="Max. 300 characters"
-            required
-          ></textarea>
-          <button class="blueButton">Submit</button>
-        </div>
-      </form>
+        <form action="/newpost" method="post" class="padded newPostForm">
+          <div class="newPostFormHeader">
+            <h2>New post:</h2>
+            <img src="/imgs/down.svg" alt="" id="formToggle" />
+          </div>
+          <div class="newPostFormBody">
+            <%- include('partials/errors')%>
+            <label for="postTitle">Title:</label>
+            <input
+              type="text"
+              name="postTitle"
+              id="postTitle"
+              minlength="1"
+              maxlength="50"
+              placeholder="Max. 50 characters"
+              required
+            />
+            <label for="postBody">Body:</label>
+            <textarea
+              name="postBody"
+              id="postBody"
+              rows="10"
+              minlength="1"
+              maxlength="300"
+              placeholder="Max. 300 characters"
+              required
+            ></textarea>
+            <button class="blueButton">Submit</button>
+          </div>
+        </form>
 
-      <%} else { %>
-      <h2 class="padded">
-        "Hoo" else is here? Become a verified member to join the fun!
-      </h2>
-      <%}%>
+        <%} else { %>
+        <h2 class="padded">
+          "Hoo" else is here? Become a verified member to join the fun!
+        </h2>
+        <%}%>
+      </div>
 
       <ul class="postUL">
         <% if (locals.posts) { %> <% posts.forEach((post) => { %>

@@ -72,6 +72,12 @@ nav {
   align-content: center;
 }
 
+.mainSticky {
+    background-color: rgb(166, 243, 166);
+    position: sticky;
+    top: 60px;
+}
+
 .newPostForm {
 }
 .newPostFormHeader {
