@@ -72,6 +72,21 @@ nav {
   align-content: center;
 }
 
+.newPostForm {
+}
+.newPostFormHeader {
+  display: flex;
+  justify-content: space-between;
+}
+
+.newPostFormBody {
+  display: none;
+  flex-direction: column;
+}
+
+.showForm {
+  display: flex;
+}
 .padded {
   padding: 10px;
 }
@@ -93,7 +108,8 @@ button {
   color: rgb(182, 0, 0);
 }
 
-.postLI, .aboutBody {
+.postLI,
+.aboutBody {
   border-bottom: 1px solid var(--grey);
   display: flex;
   flex-direction: column;
