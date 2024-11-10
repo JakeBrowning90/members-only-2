@@ -1,4 +1,4 @@
-const { body, validationResult } = require("express-validator");
+const { validationResult } = require("express-validator");
 const db = require("../db/queries");
 const asyncHandler = require("express-async-handler");
 const passport = require("passport");

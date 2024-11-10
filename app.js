@@ -8,6 +8,8 @@ const passport = require("passport");
 
 //Routers
 const indexRouter = require("./routes/index");
+// const userRouter = require("./routes/user");
+// const postRouter = require("./routes/post");
 
 const app = express();
 const path = require("node:path");
@@ -29,8 +31,8 @@ app.use((req, res, next) => {
 });
 
 app.use("/", indexRouter);
-// app.use("/artists", artistRouter);
-// app.use("/albums", albumRouter);
+// app.use("/user", userRouter);
+// app.use("/post", postRouter);
 
 app.get("*", function (req, res) {
   res.render("404", { title: "Error 404" });
